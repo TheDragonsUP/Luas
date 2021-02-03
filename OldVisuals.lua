@@ -114,6 +114,6 @@ client.set_event_callback('predict_command', function()
     end
 end)
 
-client.set_event_callback('round_start', function()
+client.set_event_callback('round_freeze_end', function()
 	reset = true
 end)
