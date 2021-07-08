@@ -1,0 +1,42 @@
+-- local variables for API functions. any changes to the line below will be lost on re-generation
+local client_set_event_callback, entity_get_local_player, entity_is_alive, ui_reference, ui_set, ui_set_visible = client.set_event_callback, entity.get_local_player, entity.is_alive, ui.reference, ui.set, ui.set_visible
+
+-----hide crash things
+
+
+
+local player_glow = ui_reference("visuals", "player esp", "Glow")
+local bullte = ui_reference("visuals", "effects", "Bullet tracers")
+local nade = ui_reference("visuals", "other esp", "Grenades")
+local bombglow = ui_reference("visuals" , "other esp" , "Bomb")
+local drop = ui_reference("visuals" , "other esp" , "dropped weapons")
+local team = ui_reference("visuals" , "colored models" , "teammate")
+local teamwall = ui_reference("visuals" , "colored models" , "teammate behind wall")
+local forceprocess = ui_reference("visuals" , "effects" , "disable post processing")
+local local_player = ui_reference("visuals" , "colored models" , "local player")
+local local_player_fake = ui_reference("visuals" , "colored models" , "local player fake")
+
+
+client_set_event_callback("paint_ui", function()
+if not entity_is_alive(entity_get_local_player()) then
+	ui_set(player_glow, false)
+	ui_set_visible(player_glow, false)
+	ui_set(bullte, false)
+	ui_set_visible(bullte, false)
+	ui_set(nade, false)
+	ui_set_visible(nade, false)
+	ui_set(bombglow , false)
+	ui_set_visible(bombglow , false)
+	ui_set(drop ,'-' )
+	ui_set_visible(drop , false)
+	ui_set(team , false)
+	ui_set_visible(team , false)
+	ui_set(teamwall , false)
+	ui_set_visible(teamwall ,false)
+	ui_set(forceprocess , true)
+	ui_set(local_player , false)
+	ui_set_visible(local_player ,false)
+	ui_set(local_player_fake , false)
+	ui_set_visible(local_player_fake ,false)
+end
+end)
