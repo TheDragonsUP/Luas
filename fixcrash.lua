@@ -1,0 +1,62 @@
+local player_glow = ui.reference("visuals", "player esp", "Glow")
+local bullte = ui.reference("visuals", "effects", "Bullet tracers")
+local nade = ui.reference("visuals", "other esp", "Grenades")
+local bombglow = ui.reference("visuals" , "other esp" , "Bomb")
+local drop = ui.reference("visuals" , "other esp" , "dropped weapons")
+local team = ui.reference("visuals" , "colored models" , "teammate")
+local teamwall = ui.reference("visuals" , "colored models" , "teammate behind wall")
+local forceprocess = ui.reference("visuals" , "effects" , "disable post processing")
+local local_player = ui.reference("visuals" , "colored models" , "local player")
+local local_player_fake = ui.reference("visuals" , "colored models" , "local player fake")
+
+database.write('fix/glow', ui.get(player_glow))
+database.write('fix/bullet', ui.get(bullte))
+database.write('fix/nade', ui.get(nade))
+database.write('fix/bomb', ui.get(bombglow))
+database.write('fix/team', ui.get(team))
+database.write('fix/teamwall', ui.get(teamwall))
+database.write('fix/forceprocess', ui.get(forceprocess))
+database.write('fix/lp', ui.get(local_player))
+database.write('fix/lpf', ui.get(local_player_fake))
+
+local curchange = 0
+
+
+client.set_event_callback("paint_ui", function()
+	if not entity.is_alive(entity.get_local_player()) then
+		ui.set(player_glow, false)
+		ui.set(bullte, false)
+		ui.set(nade, false)
+		ui.set(bombglow , false)
+		ui.set(drop ,'-' )
+		ui.set(team , false)
+		ui.set(teamwall , false)
+		ui.set(forceprocess , true)
+		ui.set(local_player , false)
+		ui.set(local_player_fake , false)
+		curchange = globals.curtime()
+	else
+		if curchange + 0.1 > globals.curtime() then
+		ui.set(player_glow, database.read('fix/glow')) 
+		ui.set(bullte, database.read('fix/bullet'))
+		ui.set(nade, database.read('fix/nade'))
+		ui.set(bombglow , database.read('fix/bomb'))
+		ui.set(drop ,'Icon')
+		ui.set(team , database.read('fix/team'))
+		ui.set(teamwall , database.read('fix/teamwall'))
+		ui.set(forceprocess , database.read('fix/forceprocess'))
+		ui.set(local_player , database.read('fix/lp'))
+		ui.set(local_player_fake , database.read('fix/lpf'))
+		else
+		database.write('fix/glow', ui.get(player_glow))
+		database.write('fix/bullet', ui.get(bullte))
+		database.write('fix/nade', ui.get(nade))
+		database.write('fix/bomb', ui.get(bombglow))
+		database.write('fix/team', ui.get(team))
+		database.write('fix/teamwall', ui.get(teamwall))
+		database.write('fix/forceprocess', ui.get(forceprocess))
+		database.write('fix/lp', ui.get(local_player))
+		database.write('fix/lpf', ui.get(local_player_fake))
+		end
+	end
+end)
